@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment secrets — NEVER commit these
+.env
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+frontend/.env.development
+
+# Build output
+frontend/build/
+frontend/.cache/
+
+# Logs & OS files
+*.log
+.DS_Store
+Thumbs.db
