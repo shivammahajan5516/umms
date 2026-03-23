@@ -1,0 +1,6 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.disableAutomaticTypeAcquisition": false,
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": false
+}
