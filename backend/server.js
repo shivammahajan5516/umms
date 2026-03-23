@@ -18,7 +18,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://umms-frontend.vercel.app'   // ← add your Vercel URL after deploy
+    'https://umms-frontend.vercel.app'
   ],
   credentials: true
 }));
@@ -51,6 +51,22 @@ app.use((err, req, res, next) => {
     success: false,
     message: err.message || 'Internal Server Error',
   });
+});
+
+app.get('/api/seed-now', async (req, res) => {
+  try {
+    const User   = require('./models/User');
+    const Reward = require('./models/Reward');
+    await User.deleteMany({ email: { $in: ['admin@umms.com','demo@umms.com'] }});
+    await Reward.deleteMany({});
+    const admin = await User.create({ name:'Admin User', email:'admin@umms.com', password:'admin123', role:'admin', city:'London' });
+    const demo  = await User.create({ name:'Jane Smith',  email:'demo@umms.com',  password:'demo123',  role:'passenger', city:'Manchester' });
+    await Reward.create({ user: admin._id, totalPoints:250, lifetimePoints:250, tier:'bronze', transactions:[{ type:'bonus', points:250, description:'Admin bonus' }] });
+    await Reward.create({ user: demo._id,  totalPoints:150, lifetimePoints:150, tier:'bronze', transactions:[{ type:'bonus', points:50, description:'Welcome bonus' }] });
+    res.json({ success: true, message: 'Seeded! Now remove this route.' });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 // ── Start Server ─────────────────────────────────────────────
