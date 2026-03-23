@@ -14,7 +14,14 @@ dotenv.config();
 const app = express();
 
 // ── Middleware ──────────────────────────────────────────────
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://umms-frontend.vercel.app'   // ← add your Vercel URL after deploy
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // ── Database Connection ─────────────────────────────────────
