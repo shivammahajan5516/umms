@@ -44,64 +44,64 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'UMMS API is running', timestamp: new Date() });
 });
 
-// ── TEMPORARY SEED ROUTE — delete after use ──────────────────
-app.get('/api/seed-now', async (req, res) => {
-  try {
-    const User   = require('./models/User');
-    const Reward = require('./models/Reward');
+// // ── TEMPORARY SEED ROUTE — delete after use ──────────────────
+// app.get('/api/seed-now', async (req, res) => {
+//   try {
+//     const User   = require('./models/User');
+//     const Reward = require('./models/Reward');
 
-    // Remove old demo accounts if they exist
-    await User.deleteMany({ email: { $in: ['admin@umms.com', 'demo@umms.com'] } });
-    await Reward.deleteMany({});
+//     // Remove old demo accounts if they exist
+//     await User.deleteMany({ email: { $in: ['admin@umms.com', 'demo@umms.com'] } });
+//     await Reward.deleteMany({});
 
-    // Create Admin
-    const admin = await User.create({
-      name: 'Admin User',
-      email: 'admin@umms.com',
-      password: 'admin123',
-      role: 'admin',
-      city: 'London'
-    });
+//     // Create Admin
+//     const admin = await User.create({
+//       name: 'Admin User',
+//       email: 'admin@umms.com',
+//       password: 'admin123',
+//       role: 'admin',
+//       city: 'London'
+//     });
 
-    // Create Demo Passenger
-    const demo = await User.create({
-      name: 'Jane Smith',
-      email: 'demo@umms.com',
-      password: 'demo123',
-      role: 'passenger',
-      city: 'Manchester'
-    });
+//     // Create Demo Passenger
+//     const demo = await User.create({
+//       name: 'Jane Smith',
+//       email: 'demo@umms.com',
+//       password: 'demo123',
+//       role: 'passenger',
+//       city: 'Manchester'
+//     });
 
-    // Create Reward accounts
-    await Reward.create({
-      user: admin._id,
-      totalPoints: 250,
-      lifetimePoints: 250,
-      tier: 'bronze',
-      transactions: [{ type: 'bonus', points: 250, description: 'Admin bonus' }]
-    });
+//     // Create Reward accounts
+//     await Reward.create({
+//       user: admin._id,
+//       totalPoints: 250,
+//       lifetimePoints: 250,
+//       tier: 'bronze',
+//       transactions: [{ type: 'bonus', points: 250, description: 'Admin bonus' }]
+//     });
 
-    await Reward.create({
-      user: demo._id,
-      totalPoints: 150,
-      lifetimePoints: 150,
-      tier: 'bronze',
-      transactions: [{ type: 'bonus', points: 50, description: 'Welcome bonus' }]
-    });
+//     await Reward.create({
+//       user: demo._id,
+//       totalPoints: 150,
+//       lifetimePoints: 150,
+//       tier: 'bronze',
+//       transactions: [{ type: 'bonus', points: 50, description: 'Welcome bonus' }]
+//     });
 
-    res.json({
-      success: true,
-      message: 'Database seeded! Admin and demo accounts created.',
-      accounts: [
-        { email: 'admin@umms.com', password: 'admin123', role: 'admin' },
-        { email: 'demo@umms.com',  password: 'demo123',  role: 'passenger' }
-      ]
-    });
+//     res.json({
+//       success: true,
+//       message: 'Database seeded! Admin and demo accounts created.',
+//       accounts: [
+//         { email: 'admin@umms.com', password: 'admin123', role: 'admin' },
+//         { email: 'demo@umms.com',  password: 'demo123',  role: 'passenger' }
+//       ]
+//     });
 
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
+//   } catch (err) {
+//     res.status(500).json({ success: false, error: err.message });
+//   }
+// });
 
 // ── Global Error Handler ─────────────────────────────────────
 app.use((err, req, res, next) => {
