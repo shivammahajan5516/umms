@@ -1,6 +1,5 @@
-// ── Auth Context ──────────────────────────────────────────────
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const AuthContext = createContext();
 
@@ -9,20 +8,18 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken]     = useState(localStorage.getItem('umms_token') || null);
   const [loading, setLoading] = useState(true);
 
-  // Set axios default auth header whenever token changes
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       fetchMe();
     } else {
-      delete axios.defaults.headers.common['Authorization'];
       setLoading(false);
     }
   }, [token]);
 
+  // Get logged in user details from backend
   const fetchMe = async () => {
     try {
-      const { data } = await axios.get('/api/auth/me');
+      const { data } = await api.get('/auth/me');
       setUser(data.user);
     } catch {
       logout();
@@ -31,27 +28,31 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Login function — calls your backend
   const login = async (email, password) => {
-    const { data } = await axios.post('/api/auth/login', { email, password });
+    const { data } = await api.post('/auth/login', { email, password });
     localStorage.setItem('umms_token', data.token);
     setToken(data.token);
     setUser(data.user);
     return data;
   };
 
+  // Register function — calls your backend
   const register = async (name, email, password, phone, city) => {
-    const { data } = await axios.post('/api/auth/register', { name, email, password, phone, city });
+    const { data } = await api.post('/auth/register', {
+      name, email, password, phone, city
+    });
     localStorage.setItem('umms_token', data.token);
     setToken(data.token);
     setUser(data.user);
     return data;
   };
 
+  // Logout — clears everything
   const logout = () => {
     localStorage.removeItem('umms_token');
     setToken(null);
     setUser(null);
-    delete axios.defaults.headers.common['Authorization'];
   };
 
   return (

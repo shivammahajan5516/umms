@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Automatically uses localhost in development, Render URL in production
 const baseURL = process.env.NODE_ENV === 'production'
   ? 'https://umms-backend.onrender.com/api'
   : 'http://localhost:5000/api';
