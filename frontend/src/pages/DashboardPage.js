@@ -16,7 +16,7 @@ const TRANSPORT_MODES = [
 const CITIES = [
   { name:'London',     img:'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80', desc:'Capital & largest city' },
   { name:'Manchester', img:'https://images.unsplash.com/photo-1596386461350-326ccb383e9f?w=600&q=80', desc:'Northern powerhouse' },
-  { name:'Birmingham', img:'https://images.unsplash.com/photo-1589834390005-5d4d9a9e1944?w=600&q=80', desc:'UK\'s second city' },
+  { name:'Birmingham', img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', desc:'UK\'s second city' },
   { name:'Edinburgh',  img:'https://images.unsplash.com/photo-1506377585622-bedcbb027afc?w=600&q=80', desc:'Scottish capital' },
 ];
 
